@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html"; charset="utf-8"/>
+        <title>Websocket</title>
+
+        <script type="text/javascript">
+            var socket;
+            if(!window.WebSocket){
+                window.WebSocket= window.MozWebSocket;
+            }
+
+            if(window.WebSocket){
+                socket = new WebSocket("ws://localhost:8888");
+                socket.onmessage= function(event){
+                    var tp=new
+                    document.getElementById('responseContent');
+                    tp.value+=event.data+"\r\n";
+                };
+
+                socket.onopen= function(event){
+                    var tp=new
+                    document.getElementById('responseContent');
+                    tp.value+="support, please go on\r\n";
+                };
+
+                socket.onopen= function(event){
+
+                    var tp=new
+                    document.getElementById('responseContent');
+                    tp.value= "";
+                    tp.value= "websocket close";
+                };
+            }else{
+                alert("not support");
+            }
+
+            function send(message){
+                if(!window.WebSocket){
+                    return;
+                }
+                if(socket.readyState== WebSocket.OPEN){
+                    socket.send(message);
+                }else{
+                    alert("create failed");
+                }
+            };
+        </script>
+    </head>
+
+    <body>
+        <form onsubmit="return false;">
+            <input type="text" name="message" value=""/><br/>
+            <input type="button" value="send  message" onClick="send(this.form.message.value)"/>
+            <hr color="red">
+            <h2>client receive message</h2>
+            <textarea id="responseContent" style="width:1024px;height:320px">
+
+            </textarea>
+        </form>
+    </body>
+</html>
